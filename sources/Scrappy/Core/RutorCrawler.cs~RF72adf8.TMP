@@ -1,0 +1,29 @@
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Text.RegularExpressions;
+
+namespace Scrappy.Core
+{
+    public class RutorCrawler
+    {
+        public IEnumerable<dynamic> List()
+        {
+            Regex row = new Regex(@"<tr class=""(tum|gai)"">.*?btih:(?<hash>[0-9a-f]{40}).*?<a href=""/torrent/(?<id>[0-9]{6})/[^""]+"">(?<name>[^<]+)<.*?</tr>", RegexOptions.Singleline);
+
+            using (WebClient client = new WebClient())
+            {
+                string uri = @"http://arutor.org/search/0/0/0/0/1080p%20BDRemux";
+                string output = client.DownloadString(uri);
+
+                foreach (Match match in row.Matches(output))
+                {
+                    yield return new
+                    {
+                    };
+                }
+            }
+
+            yield break;
+        }
+    }
+}

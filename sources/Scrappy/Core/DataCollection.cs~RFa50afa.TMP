@@ -1,0 +1,79 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Scrappy.Core
+{
+    public class DataCollection
+    {
+        private readonly IDictionary<string, DataGroup> groups;
+        private readonly IDictionary<string, DataEntry> entries;
+
+        private readonly IDictionary<string, RutorItem> items;
+        private readonly IDictionary<string, RutorDetails> details;
+        private readonly IDictionary<string, ImdbDetails> imdbs;
+
+        public DataCollection()
+        {
+            groups = new Dictionary<string, DataGroup>();
+            entries = new Dictionary<string, DataEntry>();
+            items = new Dictionary<string, RutorItem>();
+            details = new Dictionary<string, RutorDetails>();
+            imdbs = new Dictionary<string, ImdbDetails>();
+        }
+
+        public void Visit(DataStore store)
+        {
+            store.Add("groups", groups);
+            store.Add("entries", groups);
+            store.Add("items", groups);
+            store.Add("details", groups);
+            store.Add("imdbs", groups);
+        }
+
+        public IEnumerable<DataGroup> Group()
+        {
+            return groups.Values.Where(x => x.Image != null).ToArray();
+        }
+
+        public IEnumerable<DataEntry> Entries()
+        {
+            return entries.Values.ToArray();
+        }
+
+        public IEnumerable<DataEntry> Entries(DataGroup group)
+        {
+            return entries.Values.Where(x => x.Title == group.Title).ToArray();
+        }
+
+        public void Apply(IEnumerable<RutorItem> data)
+        {
+            foreach (RutorItem item in data)
+            {
+                if (items.ContainsKey(item.Id) == false)
+                {
+                    items.Add(item.Id, item);
+                }
+
+                if (entries.ContainsKey(item.Id) == false)
+                {
+                    entries.Add(item.Id, new DataEntry
+                    {
+                        Id = item.Id,
+                        Hash = item.Hash,
+                        Year = item.Year,
+                        Title = item.Title
+                    });
+                }
+
+                if (groups.ContainsKey(item.Title) == false)
+                {
+                    groups.Add(item.Title, new DataGroup
+                    {
+                        Year = item.Year,
+                        Title = item.Title
+                    });
+                }
+            }
+        }
+    }
+}

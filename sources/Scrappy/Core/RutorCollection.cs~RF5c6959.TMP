@@ -1,0 +1,21 @@
+﻿using System.Collections.Generic;
+
+namespace Scrappy.Core
+{
+    public class RutorCollection
+    {
+        public IEnumerable<dynamic> All()
+        {
+            yield break;
+        }
+
+        public IEnumerable<dynamic> Search(string text)
+        {
+            yield break;
+        }
+
+        public void Merge(IEnumerable<dynamic> data)
+        {
+        }
+    }
+}
