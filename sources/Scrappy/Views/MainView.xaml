@@ -1,0 +1,14 @@
+﻿<Window x:Class="Scrappy.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Scrappy.Views"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Scrappy" Height="600" Width="1050">
+    <Grid x:Name="owner" Margin="8">
+        <local:NavigatorView x:Name="navigator" Height="40" VerticalAlignment="Top" />
+        <local:RutorListView x:Name="rutorList" Margin="0,50,0,0" Visibility="Visible" />
+        <local:RutorDetailsView x:Name="rutorDetails" Margin="0,50,0,0" Visibility="Collapsed" />
+    </Grid>
+</Window>

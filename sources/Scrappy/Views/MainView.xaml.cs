@@ -7,12 +7,11 @@ using Scrappy.Core;
 
 namespace Scrappy.Views
 {
-    public partial class View
+    public partial class MainView
     {
         private DataCollection collection;
-        private NavigationCollection navigator;
 
-        public View()
+        public MainView()
         {
             this.InitializeComponent();
         }
@@ -29,8 +28,7 @@ namespace Scrappy.Views
             RutorCrawler rutor = new RutorCrawler();
             ImdbCrawler imdb = new ImdbCrawler();
 
-            navigator = new NavigationCollection();
-            navigation.ItemsSource = navigator.Push(ToRutor());
+            navigator.Push(ToRutor());
 
             collection = await repository.Get();
             IEnumerable<RutorItem> found = await rutor.List();
@@ -38,7 +36,15 @@ namespace Scrappy.Views
             collection.Apply(found);
             await repository.Update(collection);
 
-            items.ItemsSource = collection.Group();
+            rutorList.Group(collection);
+            rutorList.WhenSelected(item =>
+            {
+                NavigationEntry entry = ToDetails(item);
+                rutorDetails.DataContext = collection.Details(item);
+
+                Enable(rutorDetails);
+                navigator.Push(entry);
+            });
 
             foreach (RutorItem data in collection.MissingDetails())
             {
@@ -52,7 +58,7 @@ namespace Scrappy.Views
                 }
             }
 
-            items.ItemsSource = collection.Group();
+            rutorList.Group(collection);
 
             foreach (RutorDetails data in collection.MissingImdb())
             {
@@ -66,7 +72,7 @@ namespace Scrappy.Views
                 }
             }
 
-            items.ItemsSource = collection.Group();
+            rutorList.Group(collection);
         }
 
         private NavigationEntry ToRutor()
@@ -76,8 +82,7 @@ namespace Scrappy.Views
                 Title = "Rutor",
                 Execute = () =>
                 {
-                    details.Visibility = Visibility.Collapsed;
-                    items.Visibility = Visibility.Visible;
+                    Enable(rutorList);
                 }
             };
         }
@@ -89,30 +94,24 @@ namespace Scrappy.Views
                 Title = item.Title,
                 Execute = () =>
                 {
-                    items.Visibility = Visibility.Collapsed;
-                    details.DataContext = collection.Details(item);
-                    details.Visibility = Visibility.Visible;
+                    rutorDetails.DataContext = collection.Details(item);
+                    Enable(rutorDetails);
                 }
             };
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void Enable(FrameworkElement view)
         {
-            FrameworkElement source = e.Source as FrameworkElement;
-            DataGroup item = source?.DataContext as DataGroup;
+            foreach (UIElement child in owner.Children)
+            {
+                if (ReferenceEquals(child, view) == false &&
+                    ReferenceEquals(child, navigator) == false)
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
 
-            items.Visibility = Visibility.Collapsed;
-            details.DataContext = collection.Details(item);
-            details.Visibility = Visibility.Visible;
-            navigation.ItemsSource = navigator.Push(ToDetails(item));
-        }
-
-        private void UIElement_OnMouseDown2(object sender, MouseButtonEventArgs e)
-        {
-            FrameworkElement source = e.Source as FrameworkElement;
-            NavigationEntry entry = source?.DataContext as NavigationEntry;
-
-            navigation.ItemsSource = navigator.Pop(entry);
+            view.Visibility = Visibility.Visible;
         }
     }
 }

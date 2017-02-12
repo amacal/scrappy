@@ -1,4 +1,4 @@
-﻿namespace Scrappy
+﻿namespace Scrappy.Views
 {
     public partial class App
     {

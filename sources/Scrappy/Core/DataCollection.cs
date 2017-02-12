@@ -25,7 +25,7 @@ namespace Scrappy.Core
 
         public IEnumerable<DataGroup> Group()
         {
-            foreach (var group in items.Values.GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Date)))
+            foreach (var group in items.Values.GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
             {
                 foreach (var rItem in group)
                 {
@@ -108,7 +108,7 @@ namespace Scrappy.Core
             return new DataDetails
             {
                 Group = group,
-                Entries = entries.OrderByDescending(x => x.Date).ToArray()
+                Entries = entries.OrderByDescending(x => x.Id).ToArray()
             };
         }
 
