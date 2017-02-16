@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Noom;
 using Scrappy.Core;
 
 namespace Scrappy.Views
 {
     public partial class RutorListView
     {
-        private Action<DataGroup> onSelected;
+        private readonly INavigator navigator;
 
-        public RutorListView()
+        public RutorListView(INavigator navigator)
         {
-            InitializeComponent();
-        }
-
-        public void Group(DataCollection collection)
-        {
-            items.ItemsSource = collection.Group();
+            this.navigator = navigator;
+            this.InitializeComponent();
         }
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -24,12 +21,7 @@ namespace Scrappy.Views
             FrameworkElement source = e.Source as FrameworkElement;
             DataGroup item = source?.DataContext as DataGroup;
 
-            onSelected?.Invoke(item);
-        }
-
-        public void WhenSelected(Action<DataGroup> callback)
-        {
-            onSelected = callback;
+            navigator.NavigateTo($"/{item.Title}", item);
         }
     }
 }

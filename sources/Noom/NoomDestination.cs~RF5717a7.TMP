@@ -1,0 +1,36 @@
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
+
+namespace Noom
+{
+    public class NoomDestination : IDestination
+    {
+        private readonly NoomRouter router;
+        private readonly ContentControl control;
+        private readonly ItemsControl items;
+
+        public NoomDestination(NoomRouter router, ContentControl control, ItemsControl items)
+        {
+            this.router = router;
+            this.control = control;
+            this.items = items;
+        }
+
+        public void Render(IRequest request)
+        {
+            List<ISegment> segments = new List<ISegment>();
+
+            for (int i = 0; i < request.Path.Length; i++)
+            {
+                segments.Add(new NoomSegment(router, request, i));
+            }
+
+            items.ItemsSource = segments.ToArray();
+        }
+
+        public void Render(IView view)
+        {
+            view.Render(control);
+        }
+    }
+}
