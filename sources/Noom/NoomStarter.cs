@@ -39,11 +39,7 @@ namespace Noom
             container.Register<IRouter>(router);
             container.Register<INavigator>(navigator);
             container.Register<IResolver>(resolver);
-
-            foreach (Type type in bootstrapper.FindAllModules())
-            {
-                container.Register(typeof(IModule), type);
-            }
+            container.RegisterMultiple(typeof(IModule), bootstrapper.FindAllModules());
 
             foreach (Type type in bootstrapper.FindAllViews())
             {

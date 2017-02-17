@@ -24,7 +24,7 @@ namespace Scrappy.Core.Rutor
             store.Add("imdbs", imdbs);
         }
 
-        public IEnumerable<DataGroup> Group()
+        public IEnumerable<dynamic> Group()
         {
             foreach (var group in items.Values.GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
             {
@@ -40,7 +40,7 @@ namespace Scrappy.Core.Rutor
 
                             if (iDetails.Image != null && iDetails.Summary != null)
                             {
-                                yield return new DataGroup
+                                yield return new
                                 {
                                     Year = group.Key.Year,
                                     Title = group.Key.Title,
@@ -86,15 +86,15 @@ namespace Scrappy.Core.Rutor
             return found;
         }
 
-        public DataDetails Details(DataGroup group)
+        public dynamic Details(dynamic group)
         {
-            List<DataEntry> entries = new List<DataEntry>();
+            List<dynamic> entries = new List<dynamic>();
 
             foreach (RutorItem item in items.Values)
             {
                 if (item.Title == group.Title)
                 {
-                    entries.Add(new DataEntry
+                    entries.Add(new
                     {
                         Id = item.Id,
                         Date = item.Date,
@@ -106,7 +106,7 @@ namespace Scrappy.Core.Rutor
                 }
             }
 
-            return new DataDetails
+            return new
             {
                 Group = group,
                 Entries = entries.OrderByDescending(x => x.Id).ToArray()

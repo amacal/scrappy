@@ -4,14 +4,14 @@ using Noom;
 
 namespace Scrappy.Views
 {
-    public partial class RutorListView
+    public partial class HomeView
     {
         private readonly INavigator navigator;
 
-        public RutorListView(INavigator navigator)
+        public HomeView(INavigator navigator)
         {
             this.navigator = navigator;
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -19,7 +19,7 @@ namespace Scrappy.Views
             FrameworkElement source = e.Source as FrameworkElement;
             dynamic context = source?.DataContext;
 
-            navigator.NavigateTo($"/Rutor/{context.Title}", context);
+            navigator.NavigateTo(context.Path);
         }
     }
 }

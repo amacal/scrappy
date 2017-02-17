@@ -6,12 +6,11 @@ using Scrappy.Views;
 
 namespace Scrappy.Modules
 {
-    public class RutorModule : IModule
+    public class ThirtyModule : IModule
     {
         public void Register(IRouter router)
         {
-            router.Register("/Rutor", OnList);
-            router.Register("/Rutor/{title}", OnDetails);
+            router.Register("/Thirty", OnList);
         }
 
         private async Task<IViewFactory> OnList(IRequest request)
@@ -21,17 +20,6 @@ namespace Scrappy.Modules
 
             object payload = collection.Group();
             IViewFactory factory = new ControlView<RutorListView>(payload);
-
-            return factory;
-        }
-
-        private async Task<IViewFactory> OnDetails(IRequest request)
-        {
-            DataRepository repository = new DataRepository();
-            RutorCollection collection = await repository.Get();
-
-            object payload = collection.Details(request.Payload);
-            IViewFactory factory = new ControlView<RutorDetailsView>(payload);
 
             return factory;
         }
