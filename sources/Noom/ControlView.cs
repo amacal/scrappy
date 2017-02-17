@@ -1,36 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Noom
 {
-    public class ControlView : IView
-    {
-        private readonly Func<FrameworkElement> create;
-        private readonly object payload;
-
-        public ControlView(Func<FrameworkElement> create)
-        {
-            this.create = create;
-        }
-
-        public ControlView(Func<FrameworkElement> create, object payload)
-        {
-            this.create = create;
-            this.payload = payload;
-        }
-
-        public void Render(ContentControl destination)
-        {
-            FrameworkElement control = create();
-
-            control.DataContext = payload;
-            destination.Content = control;
-        }
-    }
-
-    public class ControlView<TControl> : IView
-        where TControl : FrameworkElement, new()
+    public class ControlView<TControl> : IViewFactory
+        where TControl : UserControl
     {
         private readonly object payload;
 
@@ -43,12 +16,30 @@ namespace Noom
             this.payload = payload;
         }
 
-        public void Render(ContentControl destination)
+        public IView Create(IViewTools tools)
         {
-            TControl control = new TControl();
+            return new Instance(tools, payload);
+        }
 
-            control.DataContext = payload;
-            destination.Content = control;
+        private class Instance : IView
+        {
+            private readonly IViewTools tools;
+            private readonly object payload;
+
+            public Instance(IViewTools tools, object payload)
+            {
+                this.tools = tools;
+                this.payload = payload;
+            }
+
+            public void Render(ContentControl destination)
+            {
+                TControl control = tools.Resolver.Resolve<TControl>();
+
+                destination.Content = null;
+                control.DataContext = payload;
+                destination.Content = control;
+            }
         }
     }
 }

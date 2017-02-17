@@ -28,16 +28,26 @@ namespace Noom
 
         private static void Initialize(IDestination destination, IBootstrapper bootstrapper)
         {
-            NoomRouter router = new NoomRouter();
-            NoomNavigator navigator = new NoomNavigator(router, destination);
             TinyIoCContainer container = new TinyIoCContainer();
+            NoomResolver resolver = new NoomResolver(container);
+
+            NoomTools tools = new NoomTools(resolver);
+            NoomRouter router = new NoomRouter();
+
+            NoomNavigator navigator = new NoomNavigator(router, destination, tools);
 
             container.Register<IRouter>(router);
             container.Register<INavigator>(navigator);
+            container.Register<IResolver>(resolver);
 
             foreach (Type type in bootstrapper.FindAllModules())
             {
                 container.Register(typeof(IModule), type);
+            }
+
+            foreach (Type type in bootstrapper.FindAllViews())
+            {
+                container.Register(type);
             }
 
             foreach (IModule module in container.ResolveAll<IModule>())

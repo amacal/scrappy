@@ -38,7 +38,7 @@ namespace Noom
         {
             StringBuilder path = new StringBuilder();
 
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i <= index; i++)
                 path.Append(request.Path[i]);
 
             if (path.Length == 0)

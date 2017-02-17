@@ -43,20 +43,26 @@
     <Compile Include="INavigator.cs" />
     <Compile Include="IParameters.cs" />
     <Compile Include="IRequest.cs" />
+    <Compile Include="IResolver.cs" />
     <Compile Include="IRouter.cs" />
     <Compile Include="ISegment.cs" />
     <Compile Include="IView.cs" />
+    <Compile Include="IViewFactory.cs" />
+    <Compile Include="IViewTools.cs" />
     <Compile Include="NoomBootstrapper.cs" />
     <Compile Include="NoomDestination.cs" />
+    <Compile Include="NoomHistory.cs" />
     <Compile Include="NoomNavigator.cs" />
     <Compile Include="NoomParameters.cs" />
     <Compile Include="NoomRequest.cs" />
+    <Compile Include="NoomResolver.cs" />
     <Compile Include="NoomRouter.cs" />
     <Compile Include="NoomRouterEntry.cs" />
     <Compile Include="NoomRouterPath.cs" />
     <Compile Include="NoomRouterSegment.cs" />
     <Compile Include="NoomSegment.cs" />
     <Compile Include="NoomStarter.cs" />
+    <Compile Include="NoomTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TinyIoC.cs" />
   </ItemGroup>

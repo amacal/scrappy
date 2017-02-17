@@ -5,6 +5,6 @@ namespace Noom
 {
     public interface IRouter
     {
-        void Register(string path, Func<IRequest, Task<IView>> handler);
+        void Register(string path, Func<IRequest, Task<IViewFactory>> handler);
     }
 }

@@ -13,7 +13,7 @@ namespace Noom
             items = new Dictionary<NoomRouterPath, NoomRouterEntry>();
         }
 
-        public void Register(string path, Func<IRequest, Task<IView>> handler)
+        public void Register(string path, Func<IRequest, Task<IViewFactory>> handler)
         {
             NoomRouterPath key = new NoomRouterPath(path);
             NoomRouterEntry entry = new NoomRouterEntry(key, handler);
