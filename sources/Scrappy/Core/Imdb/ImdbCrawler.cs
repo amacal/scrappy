@@ -1,9 +1,9 @@
-﻿using System.Net;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Scrappy.Core
+namespace Scrappy.Core.Imdb
 {
     public class ImdbCrawler
     {

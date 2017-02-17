@@ -1,4 +1,4 @@
-﻿namespace Scrappy.Core
+﻿namespace Scrappy.Core.Rutor
 {
     public class RutorItem
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Scrappy.Core;
+using Scrappy.Core.Imdb;
+using Scrappy.Core.Rutor;
 using Tick;
 
 namespace Scrappy.Tasks
@@ -15,7 +17,7 @@ namespace Scrappy.Tasks
         public async Task Execute()
         {
             DataRepository repository = new DataRepository();
-            DataCollection collection = await repository.Get();
+            RutorCollection collection = await repository.Get();
 
             RutorCrawler rutor = new RutorCrawler();
             RutorItem[] items = await rutor.List();

@@ -76,14 +76,12 @@
     <Compile Include="Core\DataEntry.cs" />
     <Compile Include="Core\DataGroup.cs" />
     <Compile Include="Core\DataStore.cs" />
-    <Compile Include="Core\ImdbCrawler.cs" />
-    <Compile Include="Core\ImdbDetails.cs" />
-    <Compile Include="Core\DataCollection.cs" />
-    <Compile Include="Core\NavigationCollection.cs" />
-    <Compile Include="Core\NavigationEntry.cs" />
-    <Compile Include="Core\RutorCrawler.cs" />
-    <Compile Include="Core\RutorDetails.cs" />
-    <Compile Include="Core\RutorItem.cs" />
+    <Compile Include="Core\Imdb\ImdbCrawler.cs" />
+    <Compile Include="Core\Imdb\ImdbDetails.cs" />
+    <Compile Include="Core\Rutor\RutorCollection.cs" />
+    <Compile Include="Core\Rutor\RutorCrawler.cs" />
+    <Compile Include="Core\Rutor\RutorDetails.cs" />
+    <Compile Include="Core\Rutor\RutorItem.cs" />
     <Compile Include="Core\DataRepository.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

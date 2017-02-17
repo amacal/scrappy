@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Scrappy.Core.Imdb;
 
-namespace Scrappy.Core
+namespace Scrappy.Core.Rutor
 {
-    public class DataCollection
+    public class RutorCollection
     {
         private readonly Dictionary<string, RutorItem> items;
         private readonly Dictionary<string, RutorDetails> details;
         private readonly Dictionary<string, ImdbDetails> imdbs;
 
-        public DataCollection(DataStore store)
+        public RutorCollection(DataStore store)
         {
             items = store.Get<Dictionary<string, RutorItem>>("items");
             details = store.Get<Dictionary<string, RutorDetails>>("details");

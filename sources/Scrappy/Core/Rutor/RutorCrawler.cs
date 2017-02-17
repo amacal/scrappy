@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Scrappy.Core
+namespace Scrappy.Core.Rutor
 {
     public class RutorCrawler
     {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Scrappy.Core.Rutor;
 
 namespace Scrappy.Core
 {
@@ -9,16 +10,31 @@ namespace Scrappy.Core
     {
         private static readonly string Path = @"d:\\scrappy.json";
 
-        public async Task<DataCollection> Get()
+        public async Task<RutorCollection> Get()
         {
-            string data = File.Exists(Path) ? File.ReadAllText(Path) : "{}";
-            IDictionary<string, object> items = JsonConvert.DeserializeObject<IDictionary<string, object>>(data);
+            string data = "{}";
+
+            if (File.Exists(Path))
+            {
+                using (FileStream stream = File.OpenRead(Path))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    data = await reader.ReadToEndAsync();
+                }
+            }
+
+            IDictionary<string, object> items = Deserialize(data);
             DataStore store = new DataStore(items);
 
-            return new DataCollection(store);
+            return new RutorCollection(store);
         }
 
-        public async Task Update(DataCollection collection)
+        private IDictionary<string, object> Deserialize(string data)
+        {
+            return JsonConvert.DeserializeObject<IDictionary<string, object>>(data);
+        }
+
+        public async Task Update(RutorCollection collection)
         {
             IDictionary<string, object> items = new Dictionary<string, object>();
             DataStore store = new DataStore(items);
