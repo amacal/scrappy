@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Noom;
+using Tick;
 
 namespace Scrappy.Views
 {
@@ -14,7 +15,9 @@ namespace Scrappy.Views
 
         protected override void OnInitialized(EventArgs e)
         {
+            TickScheduler.Initialize();
             NoomStarter.Initialize(content, path);
+
             base.OnInitialized(e);
         }
 
