@@ -56,18 +56,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\DataCollection.cs" />
+    <Compile Include="Core\Thirty\ThirtyLink.cs" />
+    <Compile Include="Core\Thirty\ThirtyCollection.cs" />
+    <Compile Include="Core\Thirty\ThirtyCrawler.cs" />
+    <Compile Include="Core\Thirty\ThirtyDetails.cs" />
+    <Compile Include="Core\Thirty\ThirtyItem.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\RutorModule.cs" />
     <Compile Include="Modules\ThirtyModule.cs" />
     <Compile Include="Tasks\RutorTask.cs" />
+    <Compile Include="Tasks\ThirtyTask.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RutorDetailsView.xaml.cs">
+    <Compile Include="Views\Rutor\RutorDetailsView.xaml.cs">
       <DependentUpon>RutorDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RutorListView.xaml.cs">
+    <Compile Include="Views\Rutor\RutorItemView.xaml.cs">
+      <DependentUpon>RutorItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rutor\RutorListView.xaml.cs">
       <DependentUpon>RutorListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Thirty\ThirtyDetailsView.xaml.cs">
+      <DependentUpon>ThirtyDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Thirty\ThirtyItemView.xaml.cs">
+      <DependentUpon>ThirtyItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Thirty\ThirtyListView.xaml.cs">
+      <DependentUpon>ThirtyListView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
@@ -93,11 +112,27 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\RutorDetailsView.xaml">
+    <Page Include="Views\Rutor\RutorDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RutorListView.xaml">
+    <Page Include="Views\Rutor\RutorItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rutor\RutorListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Thirty\ThirtyDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Thirty\ThirtyItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Thirty\ThirtyListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,6 +156,7 @@
       <Name>Tick</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

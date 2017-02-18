@@ -2,21 +2,24 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Scrappy.Core.Rutor;
 
 namespace Scrappy.Core
 {
     public class DataRepository
     {
-        private static readonly string Path = @"d:\\scrappy.json";
+        private static readonly string Root = @"d:\\";
 
-        public async Task<RutorCollection> Get()
+        public async Task<TCollection> Get<TCollection>()
+            where TCollection : DataCollection, new()
         {
-            string data = "{}";
+            TCollection collection = new TCollection();
 
-            if (File.Exists(Path))
+            string data = "{}";
+            string path = Path.Combine(Root, $"{collection.Name}.json");
+
+            if (File.Exists(path))
             {
-                using (FileStream stream = File.OpenRead(Path))
+                using (FileStream stream = File.OpenRead(path))
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     data = await reader.ReadToEndAsync();
@@ -26,7 +29,8 @@ namespace Scrappy.Core
             IDictionary<string, object> items = Deserialize(data);
             DataStore store = new DataStore(items);
 
-            return new RutorCollection(store);
+            collection.Get(store);
+            return collection;
         }
 
         private IDictionary<string, object> Deserialize(string data)
@@ -34,15 +38,22 @@ namespace Scrappy.Core
             return JsonConvert.DeserializeObject<IDictionary<string, object>>(data);
         }
 
-        public async Task Update(RutorCollection collection)
+        public async Task Update(DataCollection collection)
         {
             IDictionary<string, object> items = new Dictionary<string, object>();
             DataStore store = new DataStore(items);
 
-            collection.Visit(store);
+            collection.Update(store);
 
             string data = JsonConvert.SerializeObject(items, Formatting.Indented);
-            File.WriteAllText(Path, data);
+            string path = Path.Combine(Root, $"{collection.Name}.json");
+
+            using (FileStream stream = File.OpenWrite(path))
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                await writer.WriteAsync(data);
+                await writer.FlushAsync();
+            }
         }
     }
 }

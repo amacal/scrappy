@@ -4,20 +4,25 @@ using Scrappy.Core.Imdb;
 
 namespace Scrappy.Core.Rutor
 {
-    public class RutorCollection
+    public class RutorCollection : DataCollection
     {
-        private readonly Dictionary<string, RutorItem> items;
-        private readonly Dictionary<string, RutorDetails> details;
-        private readonly Dictionary<string, ImdbDetails> imdbs;
+        private Dictionary<string, RutorItem> items;
+        private Dictionary<string, RutorDetails> details;
+        private Dictionary<string, ImdbDetails> imdbs;
 
-        public RutorCollection(DataStore store)
+        string DataCollection.Name
+        {
+            get { return "rutor"; }
+        }
+
+        void DataCollection.Get(DataStore store)
         {
             items = store.Get<Dictionary<string, RutorItem>>("items");
             details = store.Get<Dictionary<string, RutorDetails>>("details");
             imdbs = store.Get<Dictionary<string, ImdbDetails>>("imdbs");
         }
 
-        public void Visit(DataStore store)
+        void DataCollection.Update(DataStore store)
         {
             store.Add("items", items);
             store.Add("details", details);

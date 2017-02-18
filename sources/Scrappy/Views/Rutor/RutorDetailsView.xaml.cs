@@ -1,4 +1,4 @@
-﻿namespace Scrappy.Views
+﻿namespace Scrappy.Views.Rutor
 {
     public partial class RutorDetailsView
     {

@@ -96,9 +96,9 @@ namespace Noom
 
             public override void Collect(NoomParameters parameters, string value)
             {
-                string name = capture.Value.Substring(1, capture.Value.Length - 2);
+                string name = capture.Value.Substring(2, capture.Value.Length - 3);
 
-                parameters.Add(name, value);
+                parameters.Add(name, value.Substring(1));
             }
         }
     }

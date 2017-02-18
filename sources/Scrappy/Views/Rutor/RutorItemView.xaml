@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Scrappy.Views.Rutor.RutorItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="320">
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="LightGray" />
+                    </Trigger>
+                </Style.Triggers>
+                <Style.Setters>
+                    <Setter Property="Background" Value="Transparent" />
+                </Style.Setters>
+            </Style>
+        </Grid.Style>
+        <Image Source="{Binding Path=Image}"
+               HorizontalAlignment="Left" />
+        <TextBlock Text="{Binding Path=Title}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="150,0,12,0"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   TextWrapping="NoWrap"
+                   TextTrimming="CharacterEllipsis" />
+        <TextBlock Text="{Binding Path=Summary}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="150,30,12,12"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   TextTrimming="CharacterEllipsis" />
+    </Grid>
+</UserControl>

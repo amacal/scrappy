@@ -17,7 +17,7 @@ namespace Scrappy.Tasks
         public async Task Execute()
         {
             DataRepository repository = new DataRepository();
-            RutorCollection collection = await repository.Get();
+            RutorCollection collection = await repository.Get<RutorCollection>();
 
             RutorCrawler rutor = new RutorCrawler();
             RutorItem[] items = await rutor.List();

@@ -2,16 +2,16 @@
 using System.Windows.Input;
 using Noom;
 
-namespace Scrappy.Views
+namespace Scrappy.Views.Thirty
 {
-    public partial class RutorListView
+    public partial class ThirtyListView
     {
         private readonly INavigator navigator;
 
-        public RutorListView(INavigator navigator)
+        public ThirtyListView(INavigator navigator)
         {
             this.navigator = navigator;
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -19,7 +19,7 @@ namespace Scrappy.Views
             FrameworkElement source = e.Source as FrameworkElement;
             dynamic context = source?.DataContext;
 
-            navigator.NavigateTo($"/Rutor/{context.Title}", context);
+            navigator.NavigateTo($"/Thirty/{context.Id}");
         }
     }
 }
