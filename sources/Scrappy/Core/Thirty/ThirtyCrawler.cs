@@ -9,7 +9,7 @@ namespace Scrappy.Core.Thirty
 {
     public class ThirtyCrawler
     {
-        public Task<ThirtyItem[]> List()
+        public Task<ThirtyItem[]> List(int page)
         {
             return Task.Run(() =>
             {
@@ -17,7 +17,7 @@ namespace Scrappy.Core.Thirty
                 {
                     client.Encoding = Encoding.UTF8;
 
-                    string uri = @"http://p30download.com/fa/tutorial/page/1";
+                    string uri = $"http://p30download.com/fa/tutorial/page/{page}";
                     string output = client.DownloadString(uri);
 
                     return ParseList(output).ToArray();

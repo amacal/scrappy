@@ -34,7 +34,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=Name}" Height="36" FontSize="18"
-                               VerticalAlignment="Center" />
+                               VerticalAlignment="Center" Background="Transparent"
+                               MouseDown="UIElement_OnMouseDown"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
