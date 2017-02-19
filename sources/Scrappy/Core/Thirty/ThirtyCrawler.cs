@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Scrappy.Core.Thirty
 {
@@ -27,29 +28,37 @@ namespace Scrappy.Core.Thirty
 
         private static IEnumerable<ThirtyItem> ParseList(string data)
         {
-            Regex row = new Regex(@"<h1>\s*<a href=""http://p30download.com/fa/entry/(?<id>[0-9]+)/"" title=""(?<title>[^\""]+)""", RegexOptions.Singleline);
+            Regex articleRegex = new Regex(@"<article.*?</article>", RegexOptions.Singleline);
+            Regex row = new Regex(@"<h1>\s*<a href=""http://p30download.com/fa/entry/(?<id>[0-9]+)/"" title=""(?<title>[^\""]+)"".*?<time pubdate=""pubdate"" datetime=""(?<date>.{10})", RegexOptions.Singleline);
             Regex latin = new Regex("[^a-zA-Z0-9 \\-\\:]");
             Regex spaces = new Regex("( ){2,}");
 
-            foreach (Match match in row.Matches(data))
+            foreach (Match articleMatch in articleRegex.Matches(data))
             {
-                string id = match.Groups["id"].Value;
-                string title = spaces.Replace(latin.Replace(match.Groups["title"].Value, ""), " ");
+                Match match = row.Match(articleMatch.Value);
 
-                int index = title.LastIndexOf('-');
-                if (index > 0)
+                if (match.Success)
                 {
-                    title = title.Substring(0, index);
-                }
+                    string id = match.Groups["id"].Value;
+                    string title = spaces.Replace(latin.Replace(match.Groups["title"].Value, ""), " ");
+                    string date = match.Groups["date"].Value;
 
-                title = title.Trim(' ', '-');
-                if (title.Length > 0)
-                {
-                    yield return new ThirtyItem
+                    int index = title.LastIndexOf('-');
+                    if (index > 0)
                     {
-                        Id = id,
-                        Title = title
-                    };
+                        title = title.Substring(0, index);
+                    }
+
+                    title = title.Trim(' ', '-');
+                    if (title.Length > 10)
+                    {
+                        yield return new ThirtyItem
+                        {
+                            Id = id,
+                            Title = title,
+                            Date = date
+                        };
+                    }
                 }
             }
         }
@@ -83,7 +92,7 @@ namespace Scrappy.Core.Thirty
                 return new ThirtyDetails
                 {
                     Id = id,
-                    Description = descriptionMatch.Groups["value"].Value,
+                    Description = HttpUtility.HtmlDecode(descriptionMatch.Groups["value"].Value),
                     Image = imageMatch.Groups["link"].Value,
                     Links = linksMatches.OfType<Match>().Select(ToLink).ToArray()
                 };
@@ -99,7 +108,7 @@ namespace Scrappy.Core.Thirty
         {
             return new ThirtyLink
             {
-                Name = match.Groups["file"].Value,
+                Name = match.Groups["file"].Value.Replace("_p30download.com", ""),
                 Path = match.Groups["link"].Value
             };
         }

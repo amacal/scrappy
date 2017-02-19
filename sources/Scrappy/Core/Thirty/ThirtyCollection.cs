@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Scrappy.Core.Thirty
 {
@@ -26,7 +27,7 @@ namespace Scrappy.Core.Thirty
 
         public IEnumerable<dynamic> List()
         {
-            foreach (ThirtyItem item in items.Values)
+            foreach (ThirtyItem item in items.Values.OrderByDescending(x => x.Date))
             {
                 if (details.ContainsKey(item.Id))
                 {
