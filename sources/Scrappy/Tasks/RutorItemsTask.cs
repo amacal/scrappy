@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Scrappy.Core;
-using Scrappy.Core.Imdb;
 using Scrappy.Core.Rutor;
 using Tick;
 
@@ -9,6 +8,11 @@ namespace Scrappy.Tasks
 {
     public class RutorItemsTask : ITask
     {
+        public string Name
+        {
+            get { return "rutor-items"; }
+        }
+
         public TimeSpan Interval
         {
             get { return TimeSpan.FromHours(1); }

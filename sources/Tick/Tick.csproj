@@ -34,10 +34,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBootstrapper.cs" />
+    <Compile Include="IFeedback.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TickBootstrapper.cs" />
     <Compile Include="TickExecutor.cs" />
+    <Compile Include="TickFeedback.cs" />
     <Compile Include="TickRepository.cs" />
     <Compile Include="TickScheduler.cs" />
   </ItemGroup>

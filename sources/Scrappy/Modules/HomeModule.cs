@@ -16,7 +16,8 @@ namespace Scrappy.Modules
             return new ControlView<HomeView>(new[]
             {
                 new { Title = "http://arutor.org", Path = "/Rutor" },
-                new { Title = "http://p30downloads.com", Path = "/Thirty" }
+                new { Title = "http://p30downloads.com", Path = "/Thirty" },
+                new { Title = "Logs", Path = "/Logs" }
             });
         }
     }

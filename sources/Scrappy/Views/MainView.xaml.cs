@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Noom;
+using Scrappy.Core;
 using Tick;
 
 namespace Scrappy.Views
@@ -15,7 +16,7 @@ namespace Scrappy.Views
 
         protected override void OnInitialized(EventArgs e)
         {
-            TickScheduler.Initialize();
+            TickScheduler.Initialize(new TickToLogger());
             NoomStarter.Initialize(content, path);
 
             base.OnInitialized(e);
@@ -27,6 +28,24 @@ namespace Scrappy.Views
             ISegment segment = source?.DataContext as ISegment;
 
             segment.Activate();
+        }
+
+        private class TickToLogger : IFeedback
+        {
+            public void OnStarted(ITask task, DateTime timestamp)
+            {
+                Logger.Info($"Task '{task.Name}' started.");
+            }
+
+            public void OnCompleted(ITask task, TimeSpan duration)
+            {
+                Logger.Info($"Task '{task.Name}' completed within '{duration.Seconds:F1}' seconds.");
+            }
+
+            public void OnFailed(ITask task, TimeSpan duration, Exception reason)
+            {
+                Logger.Info($"Task '{task.Name}' failed after '{duration.Seconds:F1}' seconds; reason='{reason.Message}'");
+            }
         }
     }
 }

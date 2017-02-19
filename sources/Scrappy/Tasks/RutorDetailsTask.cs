@@ -9,6 +9,11 @@ namespace Scrappy.Tasks
 {
     public class RutorDetailsTask : ITask
     {
+        public string Name
+        {
+            get { return "rutor-details"; }
+        }
+
         public TimeSpan Interval
         {
             get { return TimeSpan.FromSeconds(10); }

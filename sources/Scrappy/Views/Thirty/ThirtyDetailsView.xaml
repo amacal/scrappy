@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" d:DesignHeight="520" d:DesignWidth="1042">
+             mc:Ignorable="d" d:DesignHeight="495" d:DesignWidth="1018">
     <Grid>
         <TextBlock Text="{Binding Path=Title}"
                    VerticalAlignment="Top"
@@ -21,7 +21,7 @@
                    Height="200"
                    TextWrapping="Wrap"
                    TextTrimming="CharacterEllipsis" />
-        <ItemsControl Margin="24,275,16,16" Height="240"
+        <ItemsControl Margin="24,275,24,24" Height="196"
                       VerticalAlignment="Top"
                       ItemsSource="{Binding Path=Links}">
             <ItemsControl.Template>

@@ -6,13 +6,23 @@ namespace Tick
     {
         public static void Initialize()
         {
-            Initialize(new TickBootstrapper());
+            Initialize(new TickBootstrapper(), new TickFeedback());
         }
 
         public static void Initialize(IBootstrapper bootstrapper)
         {
+            Initialize(bootstrapper, new TickFeedback());
+        }
+
+        public static void Initialize(IFeedback feedback)
+        {
+            Initialize(new TickBootstrapper(), feedback);
+        }
+
+        public static void Initialize(IBootstrapper bootstrapper, IFeedback feedback)
+        {
             TickRepository repository = new TickRepository();
-            TickExecutor executor = new TickExecutor(repository);
+            TickExecutor executor = new TickExecutor(repository, feedback);
 
             foreach (Type type in bootstrapper.FindAllTasks())
             {

@@ -57,12 +57,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\DataCollection.cs" />
+    <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\LoggerEntry.cs" />
     <Compile Include="Core\Thirty\ThirtyLink.cs" />
     <Compile Include="Core\Thirty\ThirtyCollection.cs" />
     <Compile Include="Core\Thirty\ThirtyCrawler.cs" />
     <Compile Include="Core\Thirty\ThirtyDetails.cs" />
     <Compile Include="Core\Thirty\ThirtyItem.cs" />
     <Compile Include="Modules\HomeModule.cs" />
+    <Compile Include="Modules\LogsModule.cs" />
     <Compile Include="Modules\RutorModule.cs" />
     <Compile Include="Modules\ThirtyModule.cs" />
     <Compile Include="Tasks\RutorDetailsTask.cs" />
@@ -70,8 +73,11 @@
     <Compile Include="Tasks\RutorItemsTask.cs" />
     <Compile Include="Tasks\ThirtyDetailsTask.cs" />
     <Compile Include="Tasks\ThirtyItemsTask.cs" />
-    <Compile Include="Views\HomeView.xaml.cs">
+    <Compile Include="Views\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Logs\LogsView.xaml.cs">
+      <DependentUpon>LogsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rutor\RutorDetailsView.xaml.cs">
       <DependentUpon>RutorDetailsView.xaml</DependentUpon>
@@ -91,7 +97,11 @@
     <Compile Include="Views\Thirty\ThirtyListView.xaml.cs">
       <DependentUpon>ThirtyListView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\HomeView.xaml">
+    <Page Include="Views\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Logs\LogsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

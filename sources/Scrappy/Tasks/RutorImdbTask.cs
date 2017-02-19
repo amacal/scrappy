@@ -10,6 +10,11 @@ namespace Scrappy.Tasks
 {
     public class RutorImdbTask : ITask
     {
+        public string Name
+        {
+            get { return "rutor-imdb"; }
+        }
+
         public TimeSpan Interval
         {
             get { return TimeSpan.FromSeconds(10); }

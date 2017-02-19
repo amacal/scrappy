@@ -37,7 +37,12 @@ namespace Noom
                 TControl control = tools.Resolver.Resolve<TControl>();
 
                 destination.Content = null;
-                control.DataContext = payload;
+
+                if (payload != null)
+                {
+                    control.DataContext = payload;
+                }
+
                 destination.Content = control;
             }
         }
