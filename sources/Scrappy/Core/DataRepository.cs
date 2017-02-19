@@ -49,10 +49,14 @@ namespace Scrappy.Core
             string path = Path.Combine(Root, $"{collection.Name}.json");
 
             using (FileStream stream = File.OpenWrite(path))
-            using (StreamWriter writer = new StreamWriter(stream))
             {
-                await writer.WriteAsync(data);
-                await writer.FlushAsync();
+                stream.SetLength(0);
+
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    await writer.WriteAsync(data);
+                    await writer.FlushAsync();
+                }
             }
         }
     }

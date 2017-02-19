@@ -65,7 +65,9 @@
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\RutorModule.cs" />
     <Compile Include="Modules\ThirtyModule.cs" />
-    <Compile Include="Tasks\RutorTask.cs" />
+    <Compile Include="Tasks\RutorDetailsTask.cs" />
+    <Compile Include="Tasks\RutorImdbTask.cs" />
+    <Compile Include="Tasks\RutorItemsTask.cs" />
     <Compile Include="Tasks\ThirtyDetailsTask.cs" />
     <Compile Include="Tasks\ThirtyItemsTask.cs" />
     <Compile Include="Views\HomeView.xaml.cs">

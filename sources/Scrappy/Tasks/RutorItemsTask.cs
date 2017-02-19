@@ -7,7 +7,7 @@ using Tick;
 
 namespace Scrappy.Tasks
 {
-    public class RutorTask : ITask
+    public class RutorItemsTask : ITask
     {
         public TimeSpan Interval
         {
@@ -23,21 +23,6 @@ namespace Scrappy.Tasks
             RutorItem[] items = await rutor.List();
 
             collection.Apply(items);
-            await repository.Update(collection);
-
-            foreach (RutorItem item in collection.MissingDetails())
-            {
-                collection.Apply(await rutor.Details(item.Id));
-            }
-
-            await repository.Update(collection);
-            ImdbCrawler imdb = new ImdbCrawler();
-
-            foreach (RutorDetails details in collection.MissingImdb())
-            {
-                collection.Apply(await imdb.Details(details.Imdb));
-            }
-
             await repository.Update(collection);
         }
     }
