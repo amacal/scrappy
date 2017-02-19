@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Noom;
+using Scrappy.Noom;
 using Scrappy.Views.Logs;
 
 namespace Scrappy.Modules

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Noom;
+using Scrappy.Noom;
 
 namespace Scrappy.Views.Rutor
 {

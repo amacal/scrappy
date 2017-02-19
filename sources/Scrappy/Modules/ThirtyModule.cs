@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Noom;
 using Scrappy.Core;
 using Scrappy.Core.Thirty;
+using Scrappy.Noom;
 using Scrappy.Views.Thirty;
 
 namespace Scrappy.Modules

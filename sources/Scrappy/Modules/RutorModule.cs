@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Noom;
 using Scrappy.Core;
 using Scrappy.Core.Rutor;
+using Scrappy.Noom;
 using Scrappy.Views.Rutor;
 
 namespace Scrappy.Modules

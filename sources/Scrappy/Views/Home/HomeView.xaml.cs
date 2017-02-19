@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Noom;
+using Scrappy.Noom;
 
-namespace Scrappy.Views
+namespace Scrappy.Views.Home
 {
     public partial class HomeView
     {

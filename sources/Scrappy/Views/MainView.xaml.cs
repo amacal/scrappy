@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using Noom;
 using Scrappy.Core;
-using Tick;
+using Scrappy.Noom;
+using Scrappy.Tick;
 
 namespace Scrappy.Views
 {

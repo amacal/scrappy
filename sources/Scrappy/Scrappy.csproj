@@ -160,13 +160,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Noom\Noom.csproj">
-      <Project>{469a4e1c-d1dd-49a1-a80b-88939dc357e4}</Project>
-      <Name>Noom</Name>
+    <ProjectReference Include="..\Scrappy.Noom\Scrappy.Noom.csproj">
+      <Project>{8A570387-D1EF-4C54-AA08-51970FA6E98A}</Project>
+      <Name>Scrappy.Noom</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tick\Tick.csproj">
-      <Project>{641caa16-1794-4aa6-924d-76d393562e78}</Project>
-      <Name>Tick</Name>
+    <ProjectReference Include="..\Scrappy.Tick\Scrappy.Tick.csproj">
+      <Project>{1187FD23-FAEE-424B-83C2-46A5F0F3C890}</Project>
+      <Name>Scrappy.Tick</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

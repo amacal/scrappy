@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Noom;
-using Scrappy.Views;
+using Scrappy.Noom;
+using Scrappy.Views.Home;
 
 namespace Scrappy.Modules
 {

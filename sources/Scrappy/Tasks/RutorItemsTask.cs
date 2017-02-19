@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Scrappy.Core;
 using Scrappy.Core.Rutor;
-using Tick;
+using Scrappy.Tick;
 
 namespace Scrappy.Tasks
 {

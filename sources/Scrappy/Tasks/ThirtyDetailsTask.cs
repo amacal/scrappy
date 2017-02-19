@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Scrappy.Core;
 using Scrappy.Core.Thirty;
-using Tick;
+using Scrappy.Tick;
 
 namespace Scrappy.Tasks
 {
