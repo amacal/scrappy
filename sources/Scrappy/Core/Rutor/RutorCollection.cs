@@ -61,6 +61,38 @@ namespace Scrappy.Core.Rutor
             }
         }
 
+        public IEnumerable<dynamic> Group(string year)
+        {
+            foreach (var group in items.Values.Where(x => x.Year == year).GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
+            {
+                foreach (var rItem in group)
+                {
+                    if (details.ContainsKey(rItem.Id))
+                    {
+                        RutorDetails rDetails = details[rItem.Id];
+
+                        if (rDetails.Imdb != null && imdbs.ContainsKey(rDetails.Imdb))
+                        {
+                            ImdbDetails iDetails = imdbs[rDetails.Imdb];
+
+                            if (iDetails.Image != null && iDetails.Summary != null)
+                            {
+                                yield return new
+                                {
+                                    Year = group.Key.Year,
+                                    Title = group.Key.Title,
+                                    Image = iDetails.Image,
+                                    Summary = iDetails.Summary
+                                };
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public IEnumerable<RutorItem> MissingDetails()
         {
             List<RutorItem> found = new List<RutorItem>();
@@ -91,14 +123,16 @@ namespace Scrappy.Core.Rutor
             return found;
         }
 
-        public dynamic Details(dynamic group)
+        public dynamic Details(string year, string title)
         {
+            string id = null;
             List<dynamic> entries = new List<dynamic>();
 
             foreach (RutorItem item in items.Values)
             {
-                if (item.Title == group.Title)
+                if (item.Title == title && item.Year == year)
                 {
+                    id = item.Id;
                     entries.Add(new
                     {
                         Id = item.Id,
@@ -113,7 +147,13 @@ namespace Scrappy.Core.Rutor
 
             return new
             {
-                Group = group,
+                Group = new
+                {
+                    Year = year,
+                    Title = title,
+                    Image = imdbs[details[id].Imdb].Image,
+                    Summary = imdbs[details[id].Imdb].Summary
+                },
                 Entries = entries.OrderByDescending(x => x.Id).ToArray()
             };
         }

@@ -19,7 +19,7 @@ namespace Scrappy.Views.Rutor
             FrameworkElement source = e.Source as FrameworkElement;
             dynamic context = source?.DataContext;
 
-            navigator.NavigateTo($"/Rutor/{context.Title}", context);
+            navigator.NavigateTo($"/Rutor/{context.Year}/{context.Title}");
         }
     }
 }
