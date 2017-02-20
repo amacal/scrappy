@@ -4,7 +4,7 @@ using Scrappy.Noom;
 
 namespace Scrappy.Views.Rutor
 {
-    public partial class RutorListView
+    public partial class RutorListView : ICachable, IStatic
     {
         private readonly INavigator navigator;
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -7,7 +8,13 @@ namespace Scrappy.Core
 {
     public class DataRepository
     {
-        private static readonly string Root = @"d:\\";
+        private static readonly string root = @"d:\\";
+        private static readonly SemaphoreSlim synchronize;
+
+        static DataRepository()
+        {
+            synchronize = new SemaphoreSlim(1, 1);
+        }
 
         public async Task<TCollection> Get<TCollection>()
             where TCollection : DataCollection, new()
@@ -15,22 +22,31 @@ namespace Scrappy.Core
             TCollection collection = new TCollection();
 
             string data = "{}";
-            string path = Path.Combine(Root, $"{collection.Name}.json");
+            string path = Path.Combine(root, $"{collection.Name}.json");
 
-            if (File.Exists(path))
+            await synchronize.WaitAsync();
+
+            try
             {
-                using (FileStream stream = File.OpenRead(path))
-                using (StreamReader reader = new StreamReader(stream))
+                if (File.Exists(path))
                 {
-                    data = await reader.ReadToEndAsync();
+                    using (FileStream stream = File.OpenRead(path))
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        data = await reader.ReadToEndAsync();
+                    }
                 }
+
+                IDictionary<string, object> items = Deserialize(data);
+                DataStore store = new DataStore(items);
+
+                collection.Get(store);
+                return collection;
             }
-
-            IDictionary<string, object> items = Deserialize(data);
-            DataStore store = new DataStore(items);
-
-            collection.Get(store);
-            return collection;
+            finally
+            {
+                synchronize.Release();
+            }
         }
 
         private IDictionary<string, object> Deserialize(string data)
@@ -44,19 +60,27 @@ namespace Scrappy.Core
             DataStore store = new DataStore(items);
 
             collection.Update(store);
+            await synchronize.WaitAsync();
 
-            string data = JsonConvert.SerializeObject(items, Formatting.Indented);
-            string path = Path.Combine(Root, $"{collection.Name}.json");
-
-            using (FileStream stream = File.OpenWrite(path))
+            try
             {
-                stream.SetLength(0);
+                string data = JsonConvert.SerializeObject(items, Formatting.Indented);
+                string path = Path.Combine(root, $"{collection.Name}.json");
 
-                using (StreamWriter writer = new StreamWriter(stream))
+                using (FileStream stream = File.OpenWrite(path))
                 {
-                    await writer.WriteAsync(data);
-                    await writer.FlushAsync();
+                    stream.SetLength(0);
+
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        await writer.WriteAsync(data);
+                        await writer.FlushAsync();
+                    }
                 }
+            }
+            finally
+            {
+                synchronize.Release();
             }
         }
     }

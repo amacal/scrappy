@@ -33,11 +33,14 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlView.cs" />
     <Compile Include="IBootstrapper.cs" />
+    <Compile Include="ICachable.cs" />
+    <Compile Include="ICache.cs" />
     <Compile Include="IDestination.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="INavigator.cs" />
@@ -46,10 +49,12 @@
     <Compile Include="IResolver.cs" />
     <Compile Include="IRouter.cs" />
     <Compile Include="ISegment.cs" />
+    <Compile Include="IStatic.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="IViewFactory.cs" />
     <Compile Include="IViewTools.cs" />
     <Compile Include="NoomBootstrapper.cs" />
+    <Compile Include="NoomCache.cs" />
     <Compile Include="NoomDestination.cs" />
     <Compile Include="NoomHistory.cs" />
     <Compile Include="NoomNavigator.cs" />

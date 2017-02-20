@@ -31,11 +31,13 @@ namespace Scrappy.Noom
             TinyIoCContainer container = new TinyIoCContainer();
             NoomResolver resolver = new NoomResolver(container);
 
-            NoomTools tools = new NoomTools(resolver);
+            NoomCache cache = new NoomCache();
+            NoomTools tools = new NoomTools(resolver, cache);
             NoomRouter router = new NoomRouter();
 
             NoomNavigator navigator = new NoomNavigator(router, destination, tools);
 
+            container.Register<ICache>(cache);
             container.Register<IRouter>(router);
             container.Register<INavigator>(navigator);
             container.Register<IResolver>(resolver);

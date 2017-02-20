@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace Scrappy.Noom
 {
@@ -34,16 +35,37 @@ namespace Scrappy.Noom
 
             public void Render(ContentControl destination)
             {
-                TControl control = tools.Resolver.Resolve<TControl>();
+                bool isStatic = typeof(IStatic).IsAssignableFrom(typeof(TControl));
+                UserControl control = GetInstance();
 
                 destination.Content = null;
 
                 if (payload != null)
                 {
-                    control.DataContext = payload;
+                    if (control.DataContext == null || isStatic == false)
+                    {
+                        control.DataContext = payload;
+                    }
                 }
 
                 destination.Content = control;
+            }
+
+            private UserControl GetInstance()
+            {
+                Type target = typeof(TControl);
+
+                if (typeof(ICachable).IsAssignableFrom(target))
+                {
+                    return tools.Cache.Resolve(target, GetInstance);
+                }
+
+                return GetInstance(target);
+            }
+
+            private UserControl GetInstance(Type type)
+            {
+                return tools.Resolver.Resolve<TControl>();
             }
         }
     }

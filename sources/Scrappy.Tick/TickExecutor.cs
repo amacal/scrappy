@@ -40,6 +40,7 @@ namespace Scrappy.Tick
             catch (Exception ex)
             {
                 feedback.OnFailed(task, DateTime.Now - started, ex);
+                timer.Change(repository.NextInterval(), Timeout.InfiniteTimeSpan);
             }
         }
     }

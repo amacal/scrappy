@@ -2,10 +2,11 @@
 using System.Collections.ObjectModel;
 using Scrappy.Core;
 using System.Collections.Generic;
+using Scrappy.Noom;
 
 namespace Scrappy.Views.Logs
 {
-    public partial class LogsView
+    public partial class LogsView : LoggerCallback, ICachable
     {
         private ObservableCollection<dynamic> items;
 
@@ -17,20 +18,23 @@ namespace Scrappy.Views.Logs
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-
-            Logger.Subscribe(OnGetAll, OnNewEntry);
+            Logger.Subscribe(this);
         }
 
-        private void OnGetAll(IEnumerable<dynamic> entries)
+        void LoggerCallback.OnAll(IEnumerable<dynamic> entries)
         {
             items = new ObservableCollection<dynamic>(entries);
             DataContext = items;
         }
 
-        private void OnNewEntry(dynamic entry)
+        void LoggerCallback.OnNew(dynamic entry)
         {
-            Action addNewEntry = () => items.Add(entry);
-            Dispatcher.BeginInvoke(addNewEntry);
+            Dispatcher.BeginInvoke(new Action(() => items.Add(entry)));
+        }
+
+        void LoggerCallback.OnDisposed(dynamic entry)
+        {
+            Dispatcher.BeginInvoke(new Action(() => items.Remove(entry)));
         }
     }
 }

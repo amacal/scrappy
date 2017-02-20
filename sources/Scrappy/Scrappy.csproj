@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\DataCollection.cs" />
     <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\LoggerCallback.cs" />
     <Compile Include="Core\LoggerEntry.cs" />
     <Compile Include="Core\Thirty\ThirtyLink.cs" />
     <Compile Include="Core\Thirty\ThirtyCollection.cs" />

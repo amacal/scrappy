@@ -7,7 +7,7 @@ namespace Scrappy.Core
     public static class Logger
     {
         private static readonly List<LoggerEntry> entries;
-        private static Action<dynamic> onEntry;
+        private static LoggerCallback callback;
 
         static Logger()
         {
@@ -25,10 +25,11 @@ namespace Scrappy.Core
                 };
 
                 entries.Add(entry);
-                onEntry?.Invoke(ToEntry(entry));
+                callback?.OnNew(ToEntry(entry));
 
                 if (entries.Count > 100)
                 {
+                    callback?.OnDisposed(ToEntry(entries[0]));
                     entries.RemoveAt(0);
                 }
             }
@@ -43,12 +44,12 @@ namespace Scrappy.Core
             };
         }
 
-        public static void Subscribe(Action<IEnumerable<dynamic>> getAll, Action<dynamic> callback)
+        public static void Subscribe(LoggerCallback subscriber)
         {
             lock (entries)
             {
-                onEntry = callback;
-                getAll.Invoke(entries.Select(ToEntry).ToArray());
+                callback = subscriber;
+                callback?.OnAll(entries.Select(ToEntry).ToArray());
             }
         }
     }
