@@ -6,5 +6,7 @@ namespace Scrappy.Tick
     public interface IBootstrapper
     {
         IEnumerable<Type> FindAllTasks();
+
+        IEnumerable<Type> FindAllFactories();
     }
 }

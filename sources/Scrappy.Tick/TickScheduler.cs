@@ -24,6 +24,11 @@ namespace Scrappy.Tick
             TickRepository repository = new TickRepository();
             TickExecutor executor = new TickExecutor(repository, feedback);
 
+            foreach (Type type in bootstrapper.FindAllFactories())
+            {
+                repository.Add((IFactory)Activator.CreateInstance(type));
+            }
+
             foreach (Type type in bootstrapper.FindAllTasks())
             {
                 repository.Add((ITask)Activator.CreateInstance(type));

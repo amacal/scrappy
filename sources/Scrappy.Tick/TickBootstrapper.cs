@@ -17,6 +17,17 @@ namespace Scrappy.Tick
             }
         }
 
+        public IEnumerable<Type> FindAllFactories()
+        {
+            foreach (Type type in GetExportedTypes())
+            {
+                if (typeof(IFactory).IsAssignableFrom(type))
+                {
+                    yield return type;
+                }
+            }
+        }
+
         private static IEnumerable<Type> GetExportedTypes()
         {
             return Assembly.GetEntryAssembly().GetExportedTypes();

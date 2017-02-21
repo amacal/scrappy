@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBootstrapper.cs" />
+    <Compile Include="IFactory.cs" />
     <Compile Include="IFeedback.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
