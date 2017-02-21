@@ -11,9 +11,9 @@ namespace Scrappy.Modules
             router.Register("/Logs", OnList);
         }
 
-        private async Task<IViewFactory> OnList(IRequest request)
+        private IViewFactory OnList(IRequest request)
         {
-            return new ControlView<LogsView>();
+            return ControlView.Using<LogsView>();
         }
     }
 }

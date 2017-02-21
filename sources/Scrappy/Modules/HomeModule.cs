@@ -11,9 +11,9 @@ namespace Scrappy.Modules
             router.Register("/", OnList);
         }
 
-        private async Task<IViewFactory> OnList(IRequest request)
+        private IViewFactory OnList(IRequest request)
         {
-            return new ControlView<HomeView>(new[]
+            return ControlView.Payload<HomeView>(new[]
             {
                 new { Title = "http://arutor.org", Path = "/Rutor" },
                 new { Title = "http://p30downloads.com", Path = "/Thirty" },

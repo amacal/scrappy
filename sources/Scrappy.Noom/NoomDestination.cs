@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Scrappy.Noom
 {
@@ -26,9 +27,9 @@ namespace Scrappy.Noom
             }
         }
 
-        public void Render(IView view)
+        public Task Render(IView view)
         {
-            view.Render(control);
+            return view.Render(control);
         }
     }
 }

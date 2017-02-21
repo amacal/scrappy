@@ -1,9 +1,11 @@
-﻿namespace Scrappy.Noom
+﻿using System.Threading.Tasks;
+
+namespace Scrappy.Noom
 {
     public interface IDestination
     {
         void Render(ISegment[] segments);
 
-        void Render(IView view);
+        Task Render(IView view);
     }
 }

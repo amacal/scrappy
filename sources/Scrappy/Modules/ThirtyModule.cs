@@ -10,8 +10,8 @@ namespace Scrappy.Modules
     {
         public void Register(IRouter router)
         {
-            router.Register("/Thirty", OnList);
-            router.Register("/Thirty/{id}", OnDetails);
+            router.RegisterAsync("/Thirty", OnList);
+            router.RegisterAsync("/Thirty/{id}", OnDetails);
         }
 
         private async Task<IViewFactory> OnList(IRequest request)
@@ -20,7 +20,7 @@ namespace Scrappy.Modules
             ThirtyCollection collection = await repository.Get<ThirtyCollection>();
 
             object payload = collection.List();
-            IViewFactory factory = new ControlView<ThirtyListView>(payload);
+            IViewFactory factory = ControlView.Payload<ThirtyListView>(payload);
 
             return factory;
         }
@@ -31,7 +31,7 @@ namespace Scrappy.Modules
             ThirtyCollection collection = await repository.Get<ThirtyCollection>();
 
             object payload = collection.Details(request.Parameters["id"]);
-            IViewFactory factory = new ControlView<ThirtyDetailsView>(payload);
+            IViewFactory factory = ControlView.Payload<ThirtyDetailsView>(payload);
 
             return factory;
         }

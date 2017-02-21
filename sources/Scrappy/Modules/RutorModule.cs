@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Scrappy.Core;
 using Scrappy.Core.Rutor;
 using Scrappy.Noom;
@@ -11,19 +12,21 @@ namespace Scrappy.Modules
         public void Register(IRouter router)
         {
             router.Register("/Rutor", OnList);
-            router.Register("/Rutor/{year}", OnListYear);
-            router.Register("/Rutor/{year}/{title}", OnDetails);
+            router.RegisterAsync("/Rutor/{year}", OnListYear);
+            router.RegisterAsync("/Rutor/{year}/{title}", OnDetails);
         }
 
-        private async Task<IViewFactory> OnList(IRequest request)
+        private IViewFactory OnList(IRequest request)
         {
-            DataRepository repository = new DataRepository();
-            RutorCollection collection = await repository.Get<RutorCollection>();
+            Func<Task<object>> result = async () =>
+            {
+                DataRepository repository = new DataRepository();
+                RutorCollection collection = await repository.Get<RutorCollection>();
 
-            object payload = collection.Group();
-            IViewFactory factory = new ControlView<RutorListView>(payload);
+                return collection.Group();
+            };
 
-            return factory;
+            return ControlView.PayloadAsync<RutorListView>(result);
         }
 
         private async Task<IViewFactory> OnListYear(IRequest request)
@@ -32,7 +35,7 @@ namespace Scrappy.Modules
             RutorCollection collection = await repository.Get<RutorCollection>();
 
             object payload = collection.Group(request.Parameters["year"]);
-            IViewFactory factory = new ControlView<RutorListView>(payload);
+            IViewFactory factory = ControlView.Payload<RutorListView>(payload);
 
             return factory;
         }
@@ -46,7 +49,7 @@ namespace Scrappy.Modules
             string title = request.Parameters["title"];
 
             object payload = collection.Details(year, title);
-            IViewFactory factory = new ControlView<RutorDetailsView>(payload);
+            IViewFactory factory = ControlView.Payload<RutorDetailsView>(payload);
 
             return factory;
         }
