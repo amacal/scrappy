@@ -12,7 +12,7 @@ namespace Scrappy.Core.Rutor
 {
     public class RutorCrawler
     {
-        public Task<RutorItem[]> List()
+        public Task<RutorItem[]> List(string query)
         {
             return Task.Run(() =>
             {
@@ -20,7 +20,7 @@ namespace Scrappy.Core.Rutor
                 {
                     client.Encoding = Encoding.UTF8;
 
-                    string uri = @"http://arutor.org/search/0/0/0/0/1080p%20BDRemux";
+                    string uri = $"http://arutor.org/search/0/0/0/0/{query}";
                     string output = client.DownloadString(uri);
 
                     return ParseList(output).ToArray();

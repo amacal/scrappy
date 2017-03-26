@@ -132,16 +132,19 @@ namespace Scrappy.Core.Rutor
             {
                 if (item.Title == title && item.Year == year)
                 {
-                    id = item.Id;
-                    entries.Add(new
+                    if (details.ContainsKey(item.Id))
                     {
-                        Id = item.Id,
-                        Date = item.Date,
-                        Hash = item.Hash,
-                        Size = item.Size,
-                        Peers = item.Peers,
-                        Seeds = item.Seeds
-                    });
+                        id = item.Id;
+                        entries.Add(new
+                        {
+                            Id = item.Id,
+                            Date = item.Date,
+                            Hash = item.Hash,
+                            Size = item.Size,
+                            Peers = item.Peers,
+                            Seeds = item.Seeds
+                        });
+                    }
                 }
             }
 
