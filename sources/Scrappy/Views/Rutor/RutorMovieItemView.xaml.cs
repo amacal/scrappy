@@ -1,8 +1,8 @@
 ﻿namespace Scrappy.Views.Rutor
 {
-    public partial class RutorDetailsView
+    public partial class RutorMovieItemView
     {
-        public RutorDetailsView()
+        public RutorMovieItemView()
         {
             InitializeComponent();
         }

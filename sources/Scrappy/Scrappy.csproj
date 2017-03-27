@@ -79,14 +79,17 @@
     <Compile Include="Views\Logs\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Rutor\RutorDetailsView.xaml.cs">
-      <DependentUpon>RutorDetailsView.xaml</DependentUpon>
+    <Compile Include="Views\Rutor\RutorMovieDetailsView.xaml.cs">
+      <DependentUpon>RutorMovieDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Rutor\RutorItemView.xaml.cs">
-      <DependentUpon>RutorItemView.xaml</DependentUpon>
+    <Compile Include="Views\Rutor\RutorMovieItemView.xaml.cs">
+      <DependentUpon>RutorMovieItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Rutor\RutorListView.xaml.cs">
-      <DependentUpon>RutorListView.xaml</DependentUpon>
+    <Compile Include="Views\Rutor\RutorMovieListView.xaml.cs">
+      <DependentUpon>RutorMovieListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rutor\RutorReleaseView.xaml.cs">
+      <DependentUpon>RutorReleaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Thirty\ThirtyDetailsView.xaml.cs">
       <DependentUpon>ThirtyDetailsView.xaml</DependentUpon>
@@ -125,15 +128,19 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Rutor\RutorDetailsView.xaml">
+    <Page Include="Views\Rutor\RutorMovieDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Rutor\RutorItemView.xaml">
+    <Page Include="Views\Rutor\RutorMovieItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Rutor\RutorListView.xaml">
+    <Page Include="Views\Rutor\RutorMovieListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rutor\RutorReleaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

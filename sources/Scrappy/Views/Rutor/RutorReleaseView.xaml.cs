@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Scrappy.Views.Rutor
 {
     /// <summary>
-    /// Interaction logic for RutorItemView.xaml
+    /// Interaction logic for RutorReleaseView.xaml
     /// </summary>
-    public partial class RutorItemView : UserControl
+    public partial class RutorReleaseView : UserControl
     {
-        public RutorItemView()
+        public RutorReleaseView()
         {
             InitializeComponent();
         }

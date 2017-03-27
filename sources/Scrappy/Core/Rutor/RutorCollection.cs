@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Scrappy.Core.Imdb;
 
@@ -95,17 +96,23 @@ namespace Scrappy.Core.Rutor
 
         public IEnumerable<RutorItem> MissingDetails()
         {
-            List<RutorItem> found = new List<RutorItem>();
+            DateTime threshold = DateTime.Now - TimeSpan.FromDays(7);
 
-            foreach (RutorItem data in items.Values)
+            foreach (RutorItem data in items.Values.OrderByDescending(x => x.Id))
             {
                 if (details.ContainsKey(data.Id) == false)
                 {
-                    found.Add(data);
+                    yield return data;
                 }
             }
 
-            return found;
+            foreach (RutorItem data in items.Values.OrderByDescending(x => x.Id))
+            {
+                if (details.ContainsKey(data.Id) && details[data.Id].Timestamp.GetValueOrDefault() < threshold)
+                {
+                    yield return data;
+                }
+            }
         }
 
         public IEnumerable<RutorDetails> MissingImdb()
@@ -126,6 +133,8 @@ namespace Scrappy.Core.Rutor
         public dynamic Details(string year, string title)
         {
             string id = null;
+            string imdb = null;
+
             List<dynamic> entries = new List<dynamic>();
 
             foreach (RutorItem item in items.Values)
@@ -135,6 +144,8 @@ namespace Scrappy.Core.Rutor
                     if (details.ContainsKey(item.Id))
                     {
                         id = item.Id;
+                        imdb = imdb ?? details[id].Imdb;
+
                         entries.Add(new
                         {
                             Id = item.Id,
@@ -154,10 +165,48 @@ namespace Scrappy.Core.Rutor
                 {
                     Year = year,
                     Title = title,
-                    Image = imdbs[details[id].Imdb].Image,
-                    Summary = imdbs[details[id].Imdb].Summary
+                    Image = imdbs[imdb].Image,
+                    Summary = imdbs[imdb].Summary
                 },
-                Entries = entries.OrderByDescending(x => x.Id).ToArray()
+                Entries = entries.OrderByDescending(x => x.Size.Length).ThenByDescending(x => x.Size).ToArray()
+            };
+        }
+
+        public dynamic Release(string id)
+        {
+            string imdb = null;
+
+            foreach (RutorItem item in items.Values)
+            {
+                if (item.Title == items[id].Title && item.Year == items[id].Year)
+                {
+                    if (details.ContainsKey(item.Id))
+                    {
+                        imdb = imdb ?? details[item.Id].Imdb;
+                    }
+                }
+            }
+
+            return new
+            {
+                Group = new
+                {
+                    Year = items[id].Year,
+                    Title = items[id].Title,
+                    Image = imdbs[imdb].Image,
+                    Summary = imdbs[imdb].Summary
+                },
+                Release = new
+                {
+                    Id = items[id].Id,
+                    Date = items[id].Date,
+                    Hash = items[id].Hash,
+                    Size = items[id].Size,
+                    Peers = items[id].Peers,
+                    Seeds = items[id].Seeds,
+                    Media = details[id].Media ?? new string[0],
+                    Timestamp = details[id].Timestamp?.ToString("yyyy-MM-dd") ?? String.Empty
+                }
             };
         }
 
@@ -169,9 +218,17 @@ namespace Scrappy.Core.Rutor
             }
         }
 
-        public void Apply(RutorDetails data)
+        public void Apply(string id, RutorDetails data)
         {
-            details[data.Id] = data;
+            if (data == RutorDetails.Removed)
+            {
+                details.Remove(id);
+                items.Remove(id);
+            }
+            else
+            {
+                details[data.Id] = data;
+            }
         }
 
         public void Apply(ImdbDetails data)

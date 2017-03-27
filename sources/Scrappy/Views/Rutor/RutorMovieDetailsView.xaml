@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="Scrappy.Views.Rutor.RutorDetailsView"
+﻿<UserControl x:Class="Scrappy.Views.Rutor.RutorMovieDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" d:DesignHeight="495" d:DesignWidth="1018">
     <Grid>
-        <Grid x:Name="details">
+        <Grid>
             <Image Source="{Binding Path=Group.Image}"
                    HorizontalAlignment="Left"
                    Height="400"
@@ -23,10 +23,10 @@
                        HorizontalAlignment="Left"
                        Margin="300,60,16,16"
                        FontSize="20"
-                       Height="200"
+                       Height="150"
                        TextWrapping="Wrap"
                        TextTrimming="CharacterEllipsis" />
-            <ItemsControl Margin="300,275,16,16" Height="204"
+            <ItemsControl Margin="300,225,16,16" Height="254"
                           VerticalAlignment="Top"
                           ItemsSource="{Binding Path=Entries}">
                 <ItemsControl.Template>
@@ -59,9 +59,8 @@
                 </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="30" Margin="0,0,2,0"
-                              VerticalAlignment="Top"
-                              HorizontalAlignment="Stretch">
+                        <Grid Height="30" Margin="0,0,2,0" VerticalAlignment="Top"
+                              HorizontalAlignment="Stretch" MouseDown="OnMouseClick">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Style.Triggers>

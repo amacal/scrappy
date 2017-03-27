@@ -27,7 +27,7 @@ namespace Scrappy.Core.Thirty
 
         public IEnumerable<dynamic> List()
         {
-            foreach (ThirtyItem item in items.Values.OrderByDescending(x => x.Date).ThenByDescending(x => x.Id))
+            foreach (ThirtyItem item in items.Values.OrderByDescending(x => x.Id))
             {
                 if (details.ContainsKey(item.Id))
                 {

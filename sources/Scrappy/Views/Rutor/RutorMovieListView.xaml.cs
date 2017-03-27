@@ -4,17 +4,17 @@ using Scrappy.Noom;
 
 namespace Scrappy.Views.Rutor
 {
-    public partial class RutorListView : ICachable
+    public partial class RutorMovieListView : ICachable
     {
         private readonly INavigator navigator;
 
-        public RutorListView(INavigator navigator)
+        public RutorMovieListView(INavigator navigator)
         {
             this.navigator = navigator;
             this.InitializeComponent();
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnMovieClick(object sender, MouseButtonEventArgs e)
         {
             FrameworkElement source = e.Source as FrameworkElement;
             dynamic context = source?.DataContext;

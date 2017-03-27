@@ -39,12 +39,12 @@ namespace Scrappy.Views
 
             public void OnCompleted(ITask task, TimeSpan duration)
             {
-                Logger.Info($"Task '{task.Name}' completed within '{duration.Seconds:F1}' seconds.");
+                Logger.Info($"Task '{task.Name}' completed within '{duration.TotalSeconds:F1}' seconds.");
             }
 
             public void OnFailed(ITask task, TimeSpan duration, Exception reason)
             {
-                Logger.Info($"Task '{task.Name}' failed after '{duration.Seconds:F1}' seconds; reason='{reason.Message}'");
+                Logger.Info($"Task '{task.Name}' failed after '{duration.TotalSeconds:F1}' seconds; reason='{reason.Message}'");
             }
         }
     }

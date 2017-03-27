@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Scrappy.Views.Rutor.RutorListView"
+﻿<UserControl x:Class="Scrappy.Views.Rutor.RutorMovieListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -21,7 +21,8 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <local:RutorItemView Height="200" Width="320" Margin="6" MouseDown="UIElement_OnMouseDown" />
+                    <local:RutorMovieItemView Height="200" Width="320"
+                                              Margin="6" MouseDown="OnMovieClick" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

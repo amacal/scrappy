@@ -81,10 +81,24 @@ namespace Scrappy.Core.Rutor
             {
                 using (WebClient client = new WebClient())
                 {
-                    string uri = $"http://arutor.org/torrent/{id}";
-                    string output = client.DownloadString(uri);
+                    client.Encoding = Encoding.UTF8;
 
-                    return ParseDetails(id, output);
+                    try
+                    {
+                        string uri = $"http://arutor.org/torrent/{id}";
+                        string output = client.DownloadString(uri);
+
+                        return ParseDetails(id, output);
+                    }
+                    catch (WebException ex)
+                    {
+                        HttpWebResponse response = ex.Response as HttpWebResponse;
+
+                        if (response?.StatusCode == HttpStatusCode.NotFound)
+                            return RutorDetails.Removed;
+
+                        throw;
+                    }
                 }
             });
         }
@@ -92,15 +106,44 @@ namespace Scrappy.Core.Rutor
         private RutorDetails ParseDetails(string id, string data)
         {
             Regex imdb = new Regex("http://s.rutor.info/imdb/pic/(?<id>[0-9]{7,8}).gif");
+            Regex video = new Regex("Видео(:|\\s|</b>)+(?<data>[^<]{4,})<", RegexOptions.Singleline);
+            Regex audio = new Regex("(Аудио|Звук)((#|№)?[0-9]|\\s)*(:|\\s|</b>)+(?<data>[^<\\|]{4,})(<|\\|)", RegexOptions.Singleline);
 
-            Match match = imdb.Match(data);
+            Match imdbMatch = imdb.Match(data);
+            Match videoMatch = video.Match(data);
+            MatchCollection audioMatch = audio.Matches(data);
 
-            if (match.Success)
+            List<string> media = new List<string>();
+            Func<string, string> replace = x =>
             {
+                x = x.Replace("Кбит/с", "Kbps");
+                x = Regex.Replace(x, "\\p{IsCyrillic}", "");
+                x = x.Trim(' ', ':');
+
+                return x;
+            };
+
+            if (videoMatch.Success)
+            {
+                media.Add(replace(videoMatch.Groups["data"].Value));
+            }
+
+            foreach (Match match in audioMatch)
+            {
+                media.Add(replace(match.Groups["data"].Value));
+            }
+
+            if (imdbMatch.Success)
+            {
+                media.RemoveAll(String.IsNullOrWhiteSpace);
+                media.RemoveAll(x => x.Length <= 3);
+
                 return new RutorDetails
                 {
                     Id = id,
-                    Imdb = match.Groups["id"].Value
+                    Imdb = imdbMatch.Groups["id"].Value,
+                    Media = media.ToArray(),
+                    Timestamp = DateTime.Now
                 };
             }
 

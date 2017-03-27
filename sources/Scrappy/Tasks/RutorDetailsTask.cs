@@ -29,7 +29,7 @@ namespace Scrappy.Tasks
 
             if (missing != null)
             {
-                collection.Apply(await crawler.Details(missing.Id));
+                collection.Apply(missing.Id, await crawler.Details(missing.Id));
                 await repository.Update(collection);
             }
         }
