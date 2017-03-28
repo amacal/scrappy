@@ -17,17 +17,25 @@ namespace Scrappy.Views
         protected override void OnInitialized(EventArgs e)
         {
             TickScheduler.Initialize(new TickToLogger());
-            NoomStarter.Initialize(content, path);
+            NoomStarter.Initialize(content, path, paging);
 
             base.OnInitialized(e);
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnSegmentClick(object sender, MouseButtonEventArgs e)
         {
             FrameworkElement source = e.Source as FrameworkElement;
             ISegment segment = source?.DataContext as ISegment;
 
             segment.Activate();
+        }
+
+        private void OnPagerClick(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement source = e.Source as FrameworkElement;
+            IPager pager = source?.DataContext as IPager;
+
+            pager.Activate();
         }
 
         private class TickToLogger : IFeedback

@@ -6,7 +6,8 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Scrappy" Height="600" Width="1050">
     <Grid x:Name="owner" Margin="8">
-        <ItemsControl x:Name="path" Height="40" VerticalAlignment="Top">
+        <ItemsControl x:Name="path" Height="40" VerticalAlignment="Top"
+                      HorizontalAlignment="Left" Margin="0,0,200,0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" VerticalAlignment="Center" />
@@ -18,7 +19,7 @@
                                Margin="0,0,20,0"
                                FontSize="16"
                                VerticalAlignment="Center"
-                               MouseDown="UIElement_OnMouseDown">
+                               MouseDown="OnSegmentClick">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Style.Setters>
@@ -32,6 +33,45 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl x:Name="paging" Height="40" VerticalAlignment="Top"
+                      HorizontalAlignment="Right" Width="200">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" VerticalAlignment="Center"
+                               HorizontalAlignment="Right" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Margin="0,0,20,0"
+                            FontSize="16"
+                            VerticalAlignment="Center"
+                            IsEnabled="{Binding Path=IsAvailable, Mode=OneTime}"
+                            Click="OnPagerClick">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Setters>
+                                    <Setter Property="Foreground" Value="#777" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Foreground" Value="#ddd" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

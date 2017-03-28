@@ -30,7 +30,12 @@ namespace Scrappy.Core.Rutor
             store.Add("imdbs", imdbs);
         }
 
-        public IEnumerable<dynamic> Group()
+        public IEnumerable<dynamic> Group(int page)
+        {
+            return GroupCore(page).Skip(page * 20).Take(21);
+        }
+
+        private IEnumerable<dynamic> GroupCore(int page)
         {
             foreach (var group in items.Values.GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
             {
@@ -51,7 +56,8 @@ namespace Scrappy.Core.Rutor
                                     Year = group.Key.Year,
                                     Title = group.Key.Title,
                                     Image = iDetails.Image,
-                                    Summary = iDetails.Summary
+                                    Summary = iDetails.Summary,
+                                    Page = page
                                 };
 
                                 break;

@@ -11,19 +11,19 @@ namespace Scrappy.Noom
             Initialize(new NoomDestination(control), new NoomBootstrapper());
         }
 
-        public static void Initialize(ContentControl control, ItemsControl items)
+        public static void Initialize(ContentControl control, ItemsControl items, ItemsControl paging)
         {
-            Initialize(new NoomDestination(control, items), new NoomBootstrapper());
+            Initialize(new NoomDestination(control, items, paging), new NoomBootstrapper());
         }
 
-        public static void Initialize(ContentControl control, IBootstrapper bootstrapper)
+        public static void Initialize(ContentControl control, ItemsControl paging, IBootstrapper bootstrapper)
         {
             Initialize(new NoomDestination(control), bootstrapper);
         }
 
-        public static void Initialize(ContentControl control, ItemsControl items, IBootstrapper bootstrapper)
+        public static void Initialize(ContentControl control, ItemsControl items, ItemsControl paging, IBootstrapper bootstrapper)
         {
-            Initialize(new NoomDestination(control, items), bootstrapper);
+            Initialize(new NoomDestination(control, items, paging), bootstrapper);
         }
 
         private static void Initialize(IDestination destination, IBootstrapper bootstrapper)

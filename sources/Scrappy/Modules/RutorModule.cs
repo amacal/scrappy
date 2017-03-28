@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Scrappy.Core;
 using Scrappy.Core.Rutor;
@@ -24,7 +25,9 @@ namespace Scrappy.Modules
                 DataRepository repository = new DataRepository();
                 RutorCollection collection = await repository.Get<RutorCollection>();
 
-                return collection.Group();
+                int? page = request.Payload;
+
+                return collection.Group(page.GetValueOrDefault(0)).ToArray();
             };
 
             return ControlView.PayloadAsync<RutorMovieListView>(result);

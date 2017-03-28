@@ -44,6 +44,8 @@
     <Compile Include="IDestination.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="INavigator.cs" />
+    <Compile Include="IPageable.cs" />
+    <Compile Include="IPager.cs" />
     <Compile Include="IParameters.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IResolver.cs" />
@@ -52,12 +54,14 @@
     <Compile Include="IStatic.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="IViewFactory.cs" />
+    <Compile Include="IViewHook.cs" />
     <Compile Include="IViewTools.cs" />
     <Compile Include="NoomBootstrapper.cs" />
     <Compile Include="NoomCache.cs" />
     <Compile Include="NoomDestination.cs" />
     <Compile Include="NoomHistory.cs" />
     <Compile Include="NoomNavigator.cs" />
+    <Compile Include="NoomPager.cs" />
     <Compile Include="NoomParameters.cs" />
     <Compile Include="NoomRequest.cs" />
     <Compile Include="NoomResolver.cs" />
