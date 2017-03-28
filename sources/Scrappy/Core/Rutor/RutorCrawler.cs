@@ -117,8 +117,9 @@ namespace Scrappy.Core.Rutor
             Func<string, string> replace = x =>
             {
                 x = x.Replace("Кбит/с", "Kbps");
+                x = x.Replace("кадр/с", "fps");
                 x = Regex.Replace(x, "\\p{IsCyrillic}", "");
-                x = x.Trim(' ', ':');
+                x = x.Trim(' ', ':', ',');
 
                 return x;
             };
