@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Scrappy.Views.Rutor
 {
-    /// <summary>
-    /// Interaction logic for RutorReleaseView.xaml
-    /// </summary>
-    public partial class RutorReleaseView : UserControl
+    public partial class RutorReleaseView
     {
         public RutorReleaseView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+        }
+
+        private void OnImdbClick(object sender, MouseButtonEventArgs e)
+        {
+            dynamic context = DataContext;
+
+            Process.Start(context.Release.ImdbLink);
+        }
+
+        private void OnSourceClick(object sender, MouseButtonEventArgs e)
+        {
+            dynamic context = DataContext;
+
+            Process.Start(context.Release.Link);
+        }
+
+        private void OnHashClick(object sender, MouseButtonEventArgs e)
+        {
+            dynamic context = DataContext;
+
+            Clipboard.SetText(context.Release.Hash);
         }
     }
 }

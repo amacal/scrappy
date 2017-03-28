@@ -205,6 +205,9 @@ namespace Scrappy.Core.Rutor
                 Release = new
                 {
                     Id = items[id].Id,
+                    Imdb = imdb,
+                    ImdbLink = $"http://www.imdb.com/title/tt{imdb}/",
+                    Link = $"http://arutor.org/torrent/{id}/",
                     Date = items[id].Date,
                     Hash = items[id].Hash,
                     Size = items[id].Size,
