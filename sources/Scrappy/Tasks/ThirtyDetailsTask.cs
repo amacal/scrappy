@@ -16,10 +16,10 @@ namespace Scrappy.Tasks
 
         public TimeSpan Interval
         {
-            get { return TimeSpan.FromSeconds(10); }
+            get { return TimeSpan.FromMinutes(10); }
         }
 
-        public async Task Execute()
+        public async Task<TimeSpan> Execute()
         {
             DataRepository repository = new DataRepository();
             ThirtyCollection collection = await repository.Get<ThirtyCollection>();
@@ -31,7 +31,11 @@ namespace Scrappy.Tasks
             {
                 collection.Apply(await crawler.Details(missing.Id));
                 await repository.Update(collection);
+
+                return TimeSpan.FromSeconds(10);
             }
+
+            return TimeSpan.FromHours(10);
         }
     }
 }

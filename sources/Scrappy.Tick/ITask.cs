@@ -9,6 +9,6 @@ namespace Scrappy.Tick
 
         TimeSpan Interval { get; }
 
-        Task Execute();
+        Task<TimeSpan> Execute();
     }
 }

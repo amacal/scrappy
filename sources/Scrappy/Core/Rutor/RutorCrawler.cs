@@ -149,7 +149,9 @@ namespace Scrappy.Core.Rutor
 
             return new RutorDetails
             {
-                Id = id
+                Id = id,
+                Media = media.ToArray(),
+                Timestamp = DateTime.Now
             };
         }
     }

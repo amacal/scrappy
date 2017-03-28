@@ -59,6 +59,17 @@ namespace Scrappy.Tick
             return target?.Entry.Task;
         }
 
+        public void Schedule(ITask task, TimeSpan next)
+        {
+            DateTime now = DateTime.Now;
+            Entry entry = items.SingleOrDefault(x => x.Task == task);
+
+            if (entry != null)
+            {
+                entry.Next = now + next;
+            }
+        }
+
         public TimeSpan NextInterval()
         {
             DateTime now = DateTime.Now;

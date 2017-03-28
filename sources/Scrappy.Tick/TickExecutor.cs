@@ -32,9 +32,11 @@ namespace Scrappy.Tick
 
             try
             {
-                await task?.Execute();
+                TimeSpan next = await task?.Execute();
 
                 feedback.OnCompleted(task, DateTime.Now - started);
+                repository.Schedule(task, next);
+
                 timer.Change(repository.NextInterval(), Timeout.InfiniteTimeSpan);
             }
             catch (Exception ex)

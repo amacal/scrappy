@@ -41,7 +41,7 @@ namespace Scrappy.Tasks
                 get { return TimeSpan.FromHours(1); }
             }
 
-            public async Task Execute()
+            public async Task<TimeSpan> Execute()
             {
                 DataRepository repository = new DataRepository();
                 ThirtyCollection collection = await repository.Get<ThirtyCollection>();
@@ -49,6 +49,8 @@ namespace Scrappy.Tasks
 
                 collection.Apply(await crawler.List(page));
                 await repository.Update(collection);
+
+                return TimeSpan.FromHours(1);
             }
         }
     }

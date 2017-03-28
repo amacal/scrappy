@@ -31,7 +31,7 @@ namespace Scrappy.Tasks
 
             public string Name
             {
-                get { return $"rutor-items-{query.GetHashCode()}"; }
+                get { return $"rutor-items-{Math.Abs(query.GetHashCode())}"; }
             }
 
             public TimeSpan Interval
@@ -39,7 +39,7 @@ namespace Scrappy.Tasks
                 get { return TimeSpan.FromHours(1); }
             }
 
-            public async Task Execute()
+            public async Task<TimeSpan> Execute()
             {
                 DataRepository repository = new DataRepository();
                 RutorCollection collection = await repository.Get<RutorCollection>();
@@ -49,6 +49,8 @@ namespace Scrappy.Tasks
 
                 collection.Apply(items);
                 await repository.Update(collection);
+
+                return TimeSpan.FromHours(1);
             }
         }
     }
