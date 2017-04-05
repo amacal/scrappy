@@ -22,7 +22,7 @@ namespace Scrappy.Views.Rutor
             navigator.NavigateTo($"/Rutor/{context.Year}/{context.Title}");
         }
 
-        bool IPageable.CanPrev()
+        bool IPageable.CanPrev(IRequest request)
         {
             dynamic context = DataContext;
             int page = context[0].Page;
@@ -30,15 +30,15 @@ namespace Scrappy.Views.Rutor
             return page > 0;
         }
 
-        void IPageable.OnPrev()
+        void IPageable.OnPrev(IRequest request)
         {
             dynamic context = DataContext;
             int page = context[0].Page;
 
-            navigator.NavigateTo($"/Rutor", page - 1);
+            navigator.NavigateTo(request.ToString(), page - 1);
         }
 
-        bool IPageable.CanNext()
+        bool IPageable.CanNext(IRequest request)
         {
             dynamic context = DataContext;
             int count = context.Length;
@@ -46,12 +46,12 @@ namespace Scrappy.Views.Rutor
             return count == 21;
         }
 
-        void IPageable.OnNext()
+        void IPageable.OnNext(IRequest request)
         {
             dynamic context = DataContext;
             int page = context[0].Page;
 
-            navigator.NavigateTo($"/Rutor", page + 1);
+            navigator.NavigateTo(request.ToString(), page + 1);
         }
     }
 }

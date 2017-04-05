@@ -6,6 +6,6 @@ namespace Scrappy.Noom
     {
         void Render(ISegment[] segments);
 
-        Task Render(IView view);
+        Task Render(IView view, IRequest request);
     }
 }

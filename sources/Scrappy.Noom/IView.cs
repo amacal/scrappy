@@ -5,6 +5,6 @@ namespace Scrappy.Noom
 {
     public interface IView
     {
-        Task Render(ContentControl destination, IViewHook hook);
+        Task Render(ContentControl destination, IViewHook hook, IRequest request);
     }
 }

@@ -13,14 +13,14 @@ namespace Scrappy.Modules
         public void Register(IRouter router)
         {
             router.Register("/Rutor", OnMoviesAll);
-            router.RegisterAsync("/Rutor/{year}", OnMoviesByYear);
+            router.Register("/Rutor/{year}", OnMoviesByYear);
             router.RegisterAsync("/Rutor/{year}/{title}", OnMovieByTitle);
             router.RegisterAsync("/Rutor/{year}/{title}/{id}", OnReleaseById);
         }
 
-        private IViewFactory OnMoviesAll(IRequest request)
+        private static IViewFactory OnMoviesAll(IRequest request)
         {
-            Func<Task<object>> result = async () =>
+            async Task<object> result()
             {
                 DataRepository repository = new DataRepository();
                 RutorCollection collection = await repository.Get<RutorCollection>();
@@ -28,20 +28,25 @@ namespace Scrappy.Modules
                 int? page = request.Payload;
 
                 return collection.Group(page.GetValueOrDefault(0)).ToArray();
-            };
+            }
 
             return ControlView.PayloadAsync<RutorMovieListView>(result);
         }
 
-        private async Task<IViewFactory> OnMoviesByYear(IRequest request)
+        private static IViewFactory OnMoviesByYear(IRequest request)
         {
-            DataRepository repository = new DataRepository();
-            RutorCollection collection = await repository.Get<RutorCollection>();
+            async Task<object> result()
+            {
+                DataRepository repository = new DataRepository();
+                RutorCollection collection = await repository.Get<RutorCollection>();
 
-            object payload = collection.Group(request.Parameters["year"]);
-            IViewFactory factory = ControlView.Payload<RutorMovieListView>(payload);
+                int? page = request.Payload;
+                string year = request.Parameters["year"];
 
-            return factory;
+                return collection.Group(page.GetValueOrDefault(0), year).ToArray();
+            }
+
+            return ControlView.PayloadAsync<RutorMovieListView>(result);
         }
 
         private async Task<IViewFactory> OnMovieByTitle(IRequest request)

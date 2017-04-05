@@ -7,5 +7,7 @@
         IParameters Parameters { get; }
 
         dynamic Payload { get; }
+
+        string ToString();
     }
 }

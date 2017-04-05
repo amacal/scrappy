@@ -52,5 +52,10 @@ namespace Scrappy.Noom
         {
             get { return payload; }
         }
+
+        public override string ToString()
+        {
+            return "/" + String.Join("/", parts);
+        }
     }
 }

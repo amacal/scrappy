@@ -24,7 +24,7 @@ namespace Scrappy.Noom
             IViewFactory factory = await entry.GetView(request);
             IView view = factory.Create(tools);
 
-            await destination.Render(view);
+            await destination.Render(view, request);
             destination.Render(segments);
         }
 
@@ -37,7 +37,7 @@ namespace Scrappy.Noom
             IViewFactory factory = await entry.GetView(request);
             IView view = factory.Create(tools);
 
-            await destination.Render(view);
+            await destination.Render(view, request);
             destination.Render(segments);
         }
 

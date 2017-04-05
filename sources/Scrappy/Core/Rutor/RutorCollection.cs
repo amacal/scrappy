@@ -32,12 +32,19 @@ namespace Scrappy.Core.Rutor
 
         public IEnumerable<dynamic> Group(int page)
         {
-            return GroupCore(page).Skip(page * 20).Take(21);
+            return GroupCore(page, x => true).Skip(page * 20).Take(21);
         }
 
-        private IEnumerable<dynamic> GroupCore(int page)
+        public IEnumerable<dynamic> Group(int page, string year)
         {
-            foreach (var group in items.Values.GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
+            return GroupCore(page, x => x.Year == year).Skip(page * 20).Take(21);
+        }
+
+        private IEnumerable<dynamic> GroupCore(int page, Func<RutorItem, bool> predicate)
+        {
+            HashSet<string> returnedImdb = new HashSet<string>();
+
+            foreach (var group in items.Values.Where(predicate).GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
             {
                 foreach (var rItem in group)
                 {
@@ -51,48 +58,17 @@ namespace Scrappy.Core.Rutor
 
                             if (iDetails.Image != null && iDetails.Summary != null)
                             {
-                                yield return new
+                                if (returnedImdb.Add(iDetails.Id))
                                 {
-                                    Year = group.Key.Year,
-                                    Title = group.Key.Title,
-                                    Image = iDetails.Image,
-                                    Summary = iDetails.Summary,
-                                    Page = page
-                                };
-
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<dynamic> Group(string year)
-        {
-            foreach (var group in items.Values.Where(x => x.Year == year).GroupBy(x => new { x.Year, x.Title }).OrderByDescending(x => x.Max(i => i.Id)))
-            {
-                foreach (var rItem in group)
-                {
-                    if (details.ContainsKey(rItem.Id))
-                    {
-                        RutorDetails rDetails = details[rItem.Id];
-
-                        if (rDetails.Imdb != null && imdbs.ContainsKey(rDetails.Imdb))
-                        {
-                            ImdbDetails iDetails = imdbs[rDetails.Imdb];
-
-                            if (iDetails.Image != null && iDetails.Summary != null)
-                            {
-                                yield return new
-                                {
-                                    Year = group.Key.Year,
-                                    Title = group.Key.Title,
-                                    Image = iDetails.Image,
-                                    Summary = iDetails.Summary
-                                };
-
-                                break;
+                                    yield return new
+                                    {
+                                        Year = group.Key.Year,
+                                        Title = group.Key.Title,
+                                        Image = iDetails.Image,
+                                        Summary = iDetails.Summary,
+                                        Page = page
+                                    };
+                                }
                             }
                         }
                     }

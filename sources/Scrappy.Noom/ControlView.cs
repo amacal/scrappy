@@ -59,7 +59,7 @@ namespace Scrappy.Noom
                 this.payload = payload;
             }
 
-            public async Task Render(ContentControl destination, IViewHook hook)
+            public async Task Render(ContentControl destination, IViewHook hook, IRequest request)
             {
                 bool isStatic = typeof(IStatic).IsAssignableFrom(typeof(TControl));
                 UserControl control = GetInstance();
@@ -76,7 +76,7 @@ namespace Scrappy.Noom
                 }
 
                 destination.Content = control;
-                hook.OnAttached(control);
+                hook.OnAttached(control, request);
             }
 
             private UserControl GetInstance()

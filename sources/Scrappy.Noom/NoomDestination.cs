@@ -38,20 +38,20 @@ namespace Scrappy.Noom
             }
         }
 
-        public Task Render(IView view)
+        public Task Render(IView view, IRequest request)
         {
-            return view.Render(target, this);
+            return view.Render(target, this, request);
         }
 
-        public void OnAttached(UserControl control)
+        public void OnAttached(UserControl control, IRequest request)
         {
             IPageable destination = control as IPageable;
             List<IPager> pagers = new List<IPager>();
 
             if (destination != null)
             {
-                pagers.Add(new NoomPager(false, destination));
-                pagers.Add(new NoomPager(true, destination));
+                pagers.Add(new NoomPager(false, destination, request));
+                pagers.Add(new NoomPager(true, destination, request));
             }
 
             paging.ItemsSource = pagers.ToArray();

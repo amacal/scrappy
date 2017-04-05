@@ -2,12 +2,12 @@
 {
     public interface IPageable
     {
-        bool CanPrev();
+        bool CanPrev(IRequest request);
 
-        void OnPrev();
+        void OnPrev(IRequest request);
 
-        bool CanNext();
+        bool CanNext(IRequest request);
 
-        void OnNext();
+        void OnNext(IRequest request);
     }
 }

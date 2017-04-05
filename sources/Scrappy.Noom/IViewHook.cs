@@ -4,6 +4,6 @@ namespace Scrappy.Noom
 {
     public interface IViewHook
     {
-        void OnAttached(UserControl control);
+        void OnAttached(UserControl control, IRequest request);
     }
 }
