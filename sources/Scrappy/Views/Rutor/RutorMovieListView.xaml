@@ -21,8 +21,22 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <local:RutorMovieItemView Height="200" Width="320"
-                                              Margin="6" MouseDown="OnMovieClick" />
+                    <Border MouseRightButtonDown="OnContextMenu"
+                            BorderThickness="2" Margin="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <Trigger Property="Tag" Value="True">
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="Background" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <local:RutorMovieItemView Height="200" Width="320"
+                                                  Margin="2" MouseLeftButtonDown="OnMovieClick"
+                                                   />
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Web.UI;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Scrappy.Noom;
 
 namespace Scrappy.Views.Rutor
@@ -20,6 +23,24 @@ namespace Scrappy.Views.Rutor
             dynamic context = source?.DataContext;
 
             navigator.NavigateTo($"/Rutor/{context.Year}/{context.Title}");
+        }
+
+        private void OnContextMenu(object sender, MouseButtonEventArgs e)
+        {
+            Border source = sender as Border;
+            bool? selected = source?.Tag as bool?;
+
+            if (source != null)
+                source.Tag = selected != true;
+
+            if (Equals(source.Tag, true))
+            {
+                source.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                source.BorderBrush = Brushes.Transparent;
+            }
         }
 
         bool IPageable.CanPrev(IRequest request)
